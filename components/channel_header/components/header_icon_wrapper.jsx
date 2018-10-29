@@ -15,33 +15,74 @@ export default function HeaderIconWrapper({
     buttonId,
     onClick,
     tooltipKey,
+    tooltipText,
 }) {
-    function getTooltip(key) {
+    // TODO: textは一箇所でしか使われないので引数に加えるのは気がひける
+    function getTooltip(key, text) {
         const toolTips = {
             flaggedPosts: {
                 class: 'text-nowrap',
                 id: 'flaggedTooltip',
+                message: (
+                    <FormattedMessage
+                        id={t('channel_header.flagged')}
+                        defaultMessage={'FlaggedPosts'}
+                    />
+                )
+                /*
                 messageID: t('channel_header.flagged'),
                 message: 'Flagged Posts',
+                */
             },
             pinnedPosts: {
                 class: '',
                 id: 'pinnedPostTooltip',
+                message: (
+                    <FormattedMessage
+                        id={t('channel_header.pinnedPosts')}
+                        defaultMessage={'Pinned Posts'}
+                    />
+                )
+                /*
                 messageID: t('channel_header.pinnedPosts'),
                 message: 'Pinned Posts',
+                */
             },
             recentMentions: {
                 class: '',
                 id: 'recentMentionsTooltip',
+                message: (
+                    <FormattedMessage
+                        id={t('channel_header.recentMentions')}
+                        defaultMessage={'Recent Mentions'}
+                    />
+                )
+                /*
                 messageID: t('channel_header.recentMentions'),
                 message: 'Recent Mentions',
+                */
             },
             search: {
                 class: '',
                 id: 'searchTooltip',
+                message: (
+                    <FormattedMessage
+                        id={t('channel_header.search')}
+                        defaultMessage={'Search'}
+                    />
+                )
+                /*
                 messageID: t('channel_header.search'),
                 message: 'Search',
+                */
             },
+            plugin: {
+                class: '',
+                id: 'pluginTooltip',
+                message: (
+                    <span>{'hogehoge'}</span>
+                )
+            }
         };
 
         if (toolTips[key] == null) {
@@ -53,15 +94,25 @@ export default function HeaderIconWrapper({
                 id={toolTips[key].id}
                 className={toolTips[key].class}
             >
+                {toolTips[key].message}
+            </Tooltip>
+        );
+        /*
+        return (
+            <Tooltip
+                id={toolTips[key].id}
+                className={toolTips[key].class}
+            >
                 <FormattedMessage
                     id={toolTips[key].messageID}
                     defaultMessage={toolTips[key].message}
                 />
             </Tooltip>
         );
+        */
     }
 
-    const tooltip = getTooltip(tooltipKey);
+    const tooltip = getTooltip(tooltipKey, tooltipText);
     if (tooltip) {
         return (
             <div className='flex-child'>
