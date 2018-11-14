@@ -134,6 +134,26 @@ export default class PluginRegistry {
         return id;
     }
 
+    // Register a component to render a custom post action for posts with a specific type.
+    // Custom post action types must be prefixed with 'custompa_'.
+    // Accepts a string type and a component.
+    // Returns a unique identifier.
+    registerActionComponent(type, component) {
+        const id = generateId();
+
+        store.dispatch({
+            type: ActionTypes.RECEIVED_PLUGIN_ACTION_COMPONENT,
+            data: {
+                id,
+                pluginId: this.id,
+                type,
+                component,
+            },
+        });
+
+        return id;
+    }
+
     // Register a main menu list item by providing some text and an action function.
     // Accepts the following:
     // - text - A string or React element to display in the menu

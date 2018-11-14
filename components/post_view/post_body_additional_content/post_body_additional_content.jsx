@@ -127,7 +127,6 @@ export default class PostBodyAdditionalContent extends React.PureComponent {
         if (this.props.post.props && this.props.post.props.attachments) {
             attachments = this.props.post.props.attachments;
         }
-
         return (
             <MessageAttachmentList
                 attachments={attachments}

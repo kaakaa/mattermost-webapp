@@ -35,10 +35,19 @@ export default class MessageAttachment extends React.PureComponent {
          */
         options: PropTypes.object,
 
+        /**
+         * Action components from plugins
+         */
+        pluginActions: PropTypes.object,
+
         actions: PropTypes.shape({
             doPostAction: PropTypes.func.isRequired,
         }).isRequired,
     }
+
+    static defaultProps = {
+        pluginActions: {},
+    };
 
     constructor(props) {
         super(props);
@@ -89,7 +98,6 @@ export default class MessageAttachment extends React.PureComponent {
                 );
                 break;
             case 'button':
-            default:
                 content.push(
                     <ActionButton
                         key={action.id}
@@ -97,6 +105,26 @@ export default class MessageAttachment extends React.PureComponent {
                         handleAction={this.handleAction}
                     />
                 );
+                break;
+            default:
+                if (this.props.pluginActions.hasOwnProperty(action.type)) {
+                    const PluginComponent = this.props.pluginActions[action.type].component;
+                    content.push(
+                        <PluginComponent
+                            key={action.id}
+                            action={action}
+                            handleAction={this.handleAction}
+                        />
+                    )
+                } else {
+                    content.push(
+                        <ActionButton
+                            key={action.id}
+                            action={action}
+                            handleAction={this.handleAction}
+                        />
+                    );
+                }
                 break;
             }
         });

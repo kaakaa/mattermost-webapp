@@ -8,6 +8,11 @@ import {doPostAction} from 'mattermost-redux/actions/posts';
 
 import MessageAttachment from './message_attachment';
 
+function mapStateToProps(state) {
+    return {
+        pluginActions: state.plugins.actions,
+    }
+}
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators({
@@ -16,4 +21,4 @@ function mapDispatchToProps(dispatch) {
     };
 }
 
-export default connect(null, mapDispatchToProps)(MessageAttachment);
+export default connect(mapStateToProps, mapDispatchToProps)(MessageAttachment);
